@@ -182,13 +182,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const posX = extent.x1 + extent.w / 2 + (Math.random() * 60 - 30);
         const posY = extent.y1 + extent.h / 2 + (Math.random() * 60 - 30);
         
+        const nodeId = String.fromCharCode(65 + nodeCount);
         cy.add({
             group: 'nodes',
-            data: { id: nodeCount.toString() },
+            data: { id: nodeId },
             position: { x: posX, y: posY }
         });
         updateSelects();
-        statusText.innerText = `Added Node ${nodeCount} to canvas.`;
+        statusText.innerText = `Added Node ${nodeId} to canvas.`;
         nodeCount++;
     });
 
@@ -225,13 +226,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentSteps.length > 0) return; 
 
         if (currentMode === 'move' && evt.target === cy) {
+            const nodeId = String.fromCharCode(65 + nodeCount);
             cy.add({
                 group: 'nodes',
-                data: { id: nodeCount.toString() },
+                data: { id: nodeId },
                 position: { x: evt.position.x, y: evt.position.y }
             });
             updateSelects();
-            statusText.innerText = `Added Node ${nodeCount} by tapping canvas.`;
+            statusText.innerText = `Added Node ${nodeId} by tapping canvas.`;
             nodeCount++;
         }
     });

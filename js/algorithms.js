@@ -80,6 +80,7 @@ function runDijkstra(cy, startNodeId) {
         }
     }
     
+    let totalPathWeight = 0;
     // Highlight shortest paths
     for (let nodeId in previous) {
         if (previous[nodeId] !== null) {
@@ -88,12 +89,13 @@ function runDijkstra(cy, startNodeId) {
                 (e.source().id() === previous[nodeId] && e.target().id() === nodeId)
             )[0];
             if (edge) {
+                totalPathWeight += parseFloat(edge.data('weight') || 1);
                 steps.push({ type: 'select_edge', id: edge.id(), message: `Final shortest path trace traces back through edge ${previous[nodeId]}-${nodeId}.` });
             }
         }
     }
 
-    steps.push({ type: 'info', message: `Dijkstra's Algorithm complete! Shortest paths from Node ${startNodeId} to all reachable nodes have been found.` });
+    steps.push({ type: 'info', message: `Dijkstra's Algorithm complete! Shortest paths from Node ${startNodeId} to all reachable nodes have been found. Final sum (total weight of path tree): ${totalPathWeight}.` });
     return steps;
 }
 
@@ -133,7 +135,7 @@ function runPrim(cy, startNodeId) {
         addEdges(minEdge.target);
     }
     
-    steps.push({ type: 'info', message: `Prim's Algorithm complete! All nodes are connected with the minimum possible total weight: ${totalWeight}.` });
+    steps.push({ type: 'info', message: `Prim's Algorithm complete! All interconnected nodes are in the MST. Final sum (total weight): ${totalWeight}.` });
     return steps;
 }
 
